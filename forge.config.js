@@ -6,8 +6,6 @@ const path = require('path');
 module.exports = {
 	packagerConfig: {
 		icon: path.join(__dirname, 'favicon'),
-		name: 'Anydone Inbox',
-		executableName: 'Anydone Inbox',
 		overwrite: true,
 		platform: 'all',
 		quiet: true,
@@ -35,16 +33,12 @@ module.exports = {
 		},
 		{
 			name: '@electron-forge/maker-deb',
-			config: {
-				name: 'Anydone inbox desk',
-				icon: path.join(__dirname, 'favicon'),
-			},
+			config: {},
 		},
 		{
 			name: '@electron-forge/maker-rpm',
 			config: {
-				name: 'Anydone inbox desk',
-				icon: path.join(__dirname, 'favicon'),
+				icon: path.join(__dirname, 'favicon.png'),
 			},
 		},
 	],
