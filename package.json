@@ -1,0 +1,63 @@
+{
+	"name": "anydone_desk_inbox_dev",
+	"version": "1.0.0",
+	"description": "desktop app for anydone inbox dev desk",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "electron-forge start",
+		"package": "electron-forge package",
+		"make": "electron-forge make",
+		"electron": "electron .",
+		"make-mac": "npx @electron-forge/cli make --platform darwin",
+		"make-linux": "npx @electron-forge/cli make --platform linux --targets deb"
+	},
+	"author": "treeleaf anydone team",
+	"license": "MIT",
+	"devDependencies": {
+		"@electron-forge/cli": "^6.0.0-beta.61",
+		"@electron-forge/maker-deb": "^6.0.0-beta.61",
+		"@electron-forge/maker-rpm": "^6.0.0-beta.61",
+		"@electron-forge/maker-squirrel": "^6.0.0-beta.61",
+		"@electron-forge/maker-zip": "^6.0.0-beta.61",
+		"concurrently": "^6.3.0",
+		"electron": "^15.3.1",
+		"wait-on": "^6.0.0"
+	},
+	"dependencies": {
+		"@electron/remote": "^2.0.1",
+		"electron-is-dev": "^2.0.0",
+		"electron-squirrel-startup": "^1.0.0"
+	},
+	"config": {
+		"forge": {
+			"packagerConfig": {
+				"icon": "./anydone-app-icon-desktop.png"
+			},
+			"makers": [
+				{
+					"name": "@electron-forge/maker-squirrel",
+					"config": {
+						"name": "anydone_desk",
+						"authors": "treeleaf anydone team",
+						"exe": "anydone_inbox.exe"
+					}
+				},
+				{
+					"name": "@electron-forge/maker-zip",
+					"platforms": [
+						"darwin"
+					]
+				},
+				{
+					"name": "@electron-forge/maker-deb",
+					"config": {}
+				},
+				{
+					"name": "@electron-forge/maker-rpm",
+					"config": {}
+				}
+			]
+		}
+	}
+}
