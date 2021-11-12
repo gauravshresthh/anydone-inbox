@@ -1,7 +1,7 @@
 {
-	"name": "anydone_desk_inbox_dev",
+	"name": "Anydone inbox desk",
 	"version": "1.0.0",
-	"description": "desktop app for anydone inbox dev desk",
+	"description": "Desktop application for anydone inbox",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -30,34 +30,6 @@
 		"electron-squirrel-startup": "^1.0.0"
 	},
 	"config": {
-		"forge": {
-			"packagerConfig": {
-				"icon": "./anydone-app-icon-desktop.png"
-			},
-			"makers": [
-				{
-					"name": "@electron-forge/maker-squirrel",
-					"config": {
-						"name": "anydone_desk",
-						"authors": "treeleaf anydone team",
-						"exe": "anydone_inbox.exe"
-					}
-				},
-				{
-					"name": "@electron-forge/maker-zip",
-					"platforms": [
-						"darwin"
-					]
-				},
-				{
-					"name": "@electron-forge/maker-deb",
-					"config": {}
-				},
-				{
-					"name": "@electron-forge/maker-rpm",
-					"config": {}
-				}
-			]
-		}
+		"forge": "./forge.config.js"
 	}
 }
