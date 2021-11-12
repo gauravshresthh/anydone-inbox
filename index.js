@@ -1,5 +1,4 @@
 const path = require('path');
-
 const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 
@@ -11,12 +10,12 @@ function createWindow() {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
-		icon: path.join(__dirname, 'anydone-app-icon-desktop.png'),
+		icon: path.join(__dirname, 'favicon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 		},
 	});
-	win.setIcon(path.join(__dirname, 'anydone-app-icon-desktop.png'));
+	win.setIcon(path.join(__dirname, 'favicon.png'));
 	// and load the index.html of the app.
 	// win.loadFile("index.html");
 	win.loadURL(
