@@ -18,8 +18,8 @@ module.exports = {
 		{
 			name: '@electron-forge/maker-squirrel',
 			config: {
-				name: 'Anydone inbox desk',
-				authors: 'treeleaf anydone team',
+				name: 'Anydone_inbox_desk',
+				authors: 'treeleaf_anydone_team',
 				icon: path.join(__dirname, 'favicon'),
 			},
 		},
@@ -27,7 +27,7 @@ module.exports = {
 			name: '@electron-forge/maker-zip',
 			platforms: ['darwin'],
 			config: {
-				name: 'Anydone inbox desk',
+				name: 'Anydone',
 				icon: path.join(__dirname, 'favicon'),
 			},
 		},

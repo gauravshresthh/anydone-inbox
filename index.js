@@ -13,15 +13,16 @@ function createWindow() {
 		icon: path.join(__dirname, 'favicon.png'),
 		webPreferences: {
 			nodeIntegration: true,
+			nativeWindowOpen: true,
 		},
 	});
 	win.setIcon(path.join(__dirname, 'favicon.png'));
 	// and load the index.html of the app.
 	// win.loadFile("index.html");
-	win.loadURL(
-		isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/'
-		// : `file://${path.join(__dirname, '../build/index.html')}`,
-	);
+
+	let url = isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
+	// : `file://${path.join(__dirname, '../build/index.html')}`,
+	win.loadURL(url);
 
 	// Open the DevTools.
 	if (isDev) {
