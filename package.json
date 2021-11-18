@@ -1,5 +1,5 @@
 {
-	"name": "Anydone inbox desk",
+	"name": "Anydone_inbox",
 	"version": "1.0.0",
 	"description": "Desktop application for anydone inbox",
 	"main": "index.js",

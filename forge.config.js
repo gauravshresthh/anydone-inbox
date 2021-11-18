@@ -33,7 +33,9 @@ module.exports = {
 		},
 		{
 			name: '@electron-forge/maker-deb',
-			config: {},
+			config: {
+				icon: path.join(__dirname, 'favicon'),
+			},
 		},
 		{
 			name: '@electron-forge/maker-rpm',
