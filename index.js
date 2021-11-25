@@ -1,15 +1,40 @@
 const path = require('path');
-const { app, BrowserWindow, Tray, Menu } = require('electron');
+const { app, BrowserWindow, shell, Tray, Menu } = require('electron');
 const isDev = require('electron-is-dev');
 
-require('@electron/remote/main').initialize();
+// require('@electron/remote/main').initialize();
+
+// let isQuiting;
+// let tray;
 
 function createWindow() {
 	// console.log('hthis is me');
 	// Create the browser window.
-	let win = new BrowserWindow({
-		width: 800,
-		height: 600,
+	let mainWindow = new BrowserWindow({
+		width: 1024,
+		height: 768,
+		minHeight: 800,
+		minWidth: 600,
+		icon: path.join(__dirname, 'favicon.png'),
+		webPreferences: {
+			nodeIntegration: false,
+			nativeWindowOpen: true,
+			webSecurity: false,
+			contextIsolation: true,
+			show: false,
+			preload: path.join(__dirname, 'preload.js'),
+		},
+	});
+	mainWindow.setIcon(path.join(__dirname, 'favicon.png'));
+
+	// and load the index.html of the app.
+	// mainWindow.loadFile("index.html");
+
+	splash = new BrowserWindow({
+		width: 1024,
+		height: 768,
+		transparent: true,
+		menu: null,
 		minHeight: 800,
 		minWidth: 600,
 		icon: path.join(__dirname, 'favicon.png'),
@@ -20,55 +45,59 @@ function createWindow() {
 			contextIsolation: true,
 		},
 	});
-	win.setIcon(path.join(__dirname, 'favicon.png'));
-	win.setMenu(null);
-	// and load the index.html of the app.
-	// win.loadFile("index.html");
-
+	splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
 	let url = 'https://inbox.anydone.net/';
-	// isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
+
+	isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
 	// : `file://${path.join(__dirname, '../build/index.html')}`,
-	win.loadURL(url);
-	if (process.platform !== 'darwin') {
-		let appIcon = new Tray(path.join(__dirname, 'favicon.png'));
 
-		let contextMenu = Menu.buildFromTemplate([
-			{
-				label: 'Show Anydone Inbox App',
-				click: function () {
-					win.show();
-				},
-			},
-			{
-				label: 'Quit Anydone',
-				click: function () {
-					app.isQuiting = true;
-					app.quit();
-				},
-			},
-		]);
+	mainWindow.loadURL(url);
 
-		appIcon.setContextMenu(contextMenu);
-
-		win.on('close', function (event) {
+	mainWindow.webContents.on(
+		'new-window',
+		(
+			event,
+			url,
+			frameName,
+			disposition,
+			options,
+			additionalFeatures,
+			referrer,
+			postBody
+		) => {
 			event.preventDefault();
-			win = null;
-		});
+			const childWindow = new BrowserWindow({
+				webContents: options.webContents,
+				width: 1024,
+				height: 768, // use existing webContents if provided
+				show: false,
+			});
+			childWindow.setMenu(null);
+			childWindow.once('ready-to-show', () => childWindow.show());
+			if (!options.webContents) {
+				const loadOptions = {
+					httpReferrer: referrer,
+				};
+				if (postBody != null) {
+					const { data, contentType, boundary } = postBody;
+					loadOptions.postData = postBody.data;
+					loadOptions.extraHeaders = `content-type: ${contentType}; boundary=${boundary}`;
+				}
 
-		win.on('minimize', function (event) {
-			event.preventDefault();
-			win.hide();
-		});
+				childWindow.loadURL(url, loadOptions); // existing webContents will be navigated automatically
+			}
+			event.newGuest = childWindow;
+		}
+	);
 
-		win.on('show', function () {
-			appIcon.setHighlightMode('always');
-		});
-	}
-
+	mainWindow.once('ready-to-show', () => {
+		splash.destroy();
+		mainWindow.show();
+	});
 	// Open the DevTools.
-	if (isDev) {
-		win.webContents.openDevTools({ mode: 'detach' });
-	}
+	// if (isDev) {
+	// 	mainWindow.webContents.openDevTools({ mode: 'detach' });
+	// }
 }
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
