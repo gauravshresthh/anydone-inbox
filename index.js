@@ -46,7 +46,7 @@ function createWindow() {
 		},
 	});
 	splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
-	let url = 'https://inbox.anydone.net/';
+	let url = 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
 
 	// isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
 	// : `file://${path.join(__dirname, '../build/index.html')}`,
