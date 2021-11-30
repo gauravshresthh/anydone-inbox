@@ -48,7 +48,7 @@ function createWindow() {
 	splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
 	let url = 'https://inbox.anydone.net/';
 
-	isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
+	// isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
 	// : `file://${path.join(__dirname, '../build/index.html')}`,
 
 	mainWindow.loadURL(url);

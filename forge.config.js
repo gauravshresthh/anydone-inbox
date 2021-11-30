@@ -5,7 +5,7 @@ const path = require('path');
 
 module.exports = {
 	packagerConfig: {
-		icon: path.join(__dirname, 'favicon'),
+		icon: path.join(__dirname, 'favicon.png'),
 		overwrite: true,
 		platform: 'all',
 		quiet: true,
@@ -20,7 +20,7 @@ module.exports = {
 			config: {
 				name: 'Anydone_inbox_desk',
 				authors: 'treeleaf_anydone_team',
-				icon: path.join(__dirname, 'favicon'),
+				icon: path.join(__dirname, 'favicon.png'),
 			},
 		},
 		{
@@ -28,13 +28,13 @@ module.exports = {
 			platforms: ['darwin'],
 			config: {
 				name: 'Anydone',
-				icon: path.join(__dirname, 'favicon'),
+				icon: path.join(__dirname, 'favicon.png'),
 			},
 		},
 		{
 			name: '@electron-forge/maker-deb',
 			config: {
-				icon: path.join(__dirname, 'favicon'),
+				icon: path.join(__dirname, 'favicon.png'),
 			},
 		},
 		{
