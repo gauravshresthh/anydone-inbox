@@ -46,10 +46,17 @@ function createWindow() {
 		},
 	});
 	splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
-	let url = 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
+	let url = 'https://inbox.anydone.net/';
+	// isDev
+	// 	? 'http://localhost:3000/'
+	// 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
+	// ('https://anydone-inboxdesk-tlldytlira-uw.a.run.app');
 
-	// isDev ? 'http://localhost:3000/' : 'https://inbox.anydone.net/';
-	// : `file://${path.join(__dirname, '../build/index.html')}`,
+	// isDev
+	// 	? 'http://localhost:3000/'
+	// 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
+
+	//  `file://${path.join(__dirname, '../build/index.html')}`,
 
 	mainWindow.loadURL(url);
 
@@ -72,7 +79,7 @@ function createWindow() {
 				height: 768, // use existing webContents if provided
 				show: false,
 			});
-			childWindow.setMenu(null);
+			// childWindow.setMenu(null);
 			childWindow.once('ready-to-show', () => childWindow.show());
 			if (!options.webContents) {
 				const loadOptions = {
