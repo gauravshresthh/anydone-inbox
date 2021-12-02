@@ -8,103 +8,105 @@ const isDev = require('electron-is-dev');
 // let tray;
 
 function createWindow() {
-	// console.log('hthis is me');
-	// Create the browser window.
-	let mainWindow = new BrowserWindow({
-		width: 1024,
-		height: 768,
-		minHeight: 800,
-		minWidth: 600,
-		icon: path.join(__dirname, 'favicon.png'),
-		webPreferences: {
-			nodeIntegration: false,
-			nativeWindowOpen: true,
-			webSecurity: false,
-			contextIsolation: true,
-			show: false,
-			preload: path.join(__dirname, 'preload.js'),
-		},
-	});
-	mainWindow.setIcon(path.join(__dirname, 'favicon.png'));
+  // console.log('hthis is me');
+  // Create the browser window.
+  let mainWindow = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    minHeight: 800,
+    minWidth: 600,
+    icon: path.join(__dirname, 'favicon.png'),
+    webPreferences: {
+      nodeIntegration: false,
+      nativeWindowOpen: true,
+      webSecurity: false,
+      contextIsolation: true,
+      show: false,
+      preload: path.join(__dirname, 'preload.js'),
+    },
+  });
+  mainWindow.setIcon(path.join(__dirname, 'favicon.png'));
+  mainWindow.setMenu(null);
 
-	// and load the index.html of the app.
-	// mainWindow.loadFile("index.html");
+  // and load the index.html of the app.
+  // mainWindow.loadFile("index.html");
 
-	splash = new BrowserWindow({
-		width: 1024,
-		height: 768,
-		transparent: true,
-		menu: null,
-		minHeight: 800,
-		minWidth: 600,
-		icon: path.join(__dirname, 'favicon.png'),
-		webPreferences: {
-			nodeIntegration: false,
-			nativeWindowOpen: true,
-			webSecurity: false,
-			contextIsolation: true,
-		},
-	});
-	splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
-	let url = 'https://inbox.anydone.net/';
-	// isDev
-	// 	? 'http://localhost:3000/'
-	// 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
-	// ('https://anydone-inboxdesk-tlldytlira-uw.a.run.app');
+  splash = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    transparent: true,
+    menu: null,
+    minHeight: 800,
+    minWidth: 600,
+    icon: path.join(__dirname, 'favicon.png'),
+    webPreferences: {
+      nodeIntegration: false,
+      nativeWindowOpen: true,
+      webSecurity: false,
+      contextIsolation: true,
+    },
+  });
+  splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
+  splash.setMenu(null);
+  let url = 'https://inbox.anydone.net/';
+  // isDev
+  // 	? 'http://localhost:3000/'
+  // 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
+  // ('https://anydone-inboxdesk-tlldytlira-uw.a.run.app');
 
-	// isDev
-	// 	? 'http://localhost:3000/'
-	// 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
+  // isDev
+  // 	? 'http://localhost:3000/'
+  // 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
 
-	//  `file://${path.join(__dirname, '../build/index.html')}`,
+  //  `file://${path.join(__dirname, '../build/index.html')}`,
 
-	mainWindow.loadURL(url);
+  mainWindow.loadURL(url);
 
-	mainWindow.webContents.on(
-		'new-window',
-		(
-			event,
-			url,
-			frameName,
-			disposition,
-			options,
-			additionalFeatures,
-			referrer,
-			postBody
-		) => {
-			event.preventDefault();
-			const childWindow = new BrowserWindow({
-				webContents: options.webContents,
-				width: 1024,
-				height: 768, // use existing webContents if provided
-				show: false,
-			});
-			// childWindow.setMenu(null);
-			childWindow.once('ready-to-show', () => childWindow.show());
-			if (!options.webContents) {
-				const loadOptions = {
-					httpReferrer: referrer,
-				};
-				if (postBody != null) {
-					const { data, contentType, boundary } = postBody;
-					loadOptions.postData = postBody.data;
-					loadOptions.extraHeaders = `content-type: ${contentType}; boundary=${boundary}`;
-				}
+  mainWindow.webContents.on(
+    'new-window',
+    (
+      event,
+      url,
+      frameName,
+      disposition,
+      options,
+      additionalFeatures,
+      referrer,
+      postBody,
+    ) => {
+      event.preventDefault();
+      const childWindow = new BrowserWindow({
+        webContents: options.webContents,
+        width: 1024,
+        height: 768, // use existing webContents if provided
+        show: false,
+      });
+      childWindow.setMenu(null);
+      childWindow.once('ready-to-show', () => childWindow.show());
+      if (!options.webContents) {
+        const loadOptions = {
+          httpReferrer: referrer,
+        };
+        if (postBody != null) {
+          const { data, contentType, boundary } = postBody;
+          loadOptions.postData = postBody.data;
+          loadOptions.extraHeaders = `content-type: ${contentType}; boundary=${boundary}`;
+        }
 
-				childWindow.loadURL(url, loadOptions); // existing webContents will be navigated automatically
-			}
-			event.newGuest = childWindow;
-		}
-	);
+        childWindow.loadURL(url, loadOptions); // existing webContents will be navigated automatically
+      }
+      event.newGuest = childWindow;
+    },
+  );
 
-	mainWindow.once('ready-to-show', () => {
-		splash.destroy();
-		mainWindow.show();
-	});
-	// Open the DevTools.
-	// if (isDev) {
-	// 	mainWindow.webContents.openDevTools({ mode: 'detach' });
-	// }
+  mainWindow.once('ready-to-show', () => {
+    splash.destroy();
+    mainWindow.show();
+  });
+  // Open the DevTools.
+  // if (isDev) {
+  // 	mainWindow.webContents.openDevTools({ mode: 'detach' });
+  // }
 }
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
@@ -118,13 +120,13 @@ app.whenReady().then(createWindow);
 // explicitly with Cmd + Q.
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
 app.on('activate', () => {
-	if (BrowserWindow.getAllWindows().length === 0) {
-		createWindow();
-	}
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  }
 });

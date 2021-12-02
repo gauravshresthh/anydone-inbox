@@ -18,7 +18,7 @@ module.exports = {
 		{
 			name: '@electron-forge/maker-squirrel',
 			config: {
-				name: 'Anydone_inbox_desk',
+				name: 'Anydone Inbox',
 				authors: 'treeleaf_anydone_team',
 				icon: path.join(__dirname, 'favicon.png'),
 			},
