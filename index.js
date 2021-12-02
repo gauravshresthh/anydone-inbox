@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 const path = require('path');
-const { app, BrowserWindow, shell, Tray, Menu } = require('electron');
-const isDev = require('electron-is-dev');
+const { app, BrowserWindow } = require('electron');
+// const isDev = require('electron-is-dev');
 
 // require('@electron/remote/main').initialize();
 
@@ -10,7 +11,7 @@ const isDev = require('electron-is-dev');
 function createWindow() {
   // console.log('hthis is me');
   // Create the browser window.
-  let mainWindow = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
     minHeight: 800,
@@ -31,7 +32,7 @@ function createWindow() {
   // and load the index.html of the app.
   // mainWindow.loadFile("index.html");
 
-  splash = new BrowserWindow({
+  const splash = new BrowserWindow({
     width: 1024,
     height: 768,
     transparent: true,
@@ -48,7 +49,7 @@ function createWindow() {
   });
   splash.loadURL(`file://${path.join(__dirname)}/splash.html`);
   splash.setMenu(null);
-  let url = 'https://inbox.anydone.net/';
+  const link = 'https://inbox.anydone.net/';
   // isDev
   // 	? 'http://localhost:3000/'
   // 	: 'https://anydone-inboxdesk-tlldytlira-uw.a.run.app';
@@ -60,7 +61,7 @@ function createWindow() {
 
   //  `file://${path.join(__dirname, '../build/index.html')}`,
 
-  mainWindow.loadURL(url);
+  mainWindow.loadURL(link);
 
   mainWindow.webContents.on(
     'new-window',
@@ -88,7 +89,7 @@ function createWindow() {
           httpReferrer: referrer,
         };
         if (postBody != null) {
-          const { data, contentType, boundary } = postBody;
+          const { contentType, boundary } = postBody;
           loadOptions.postData = postBody.data;
           loadOptions.extraHeaders = `content-type: ${contentType}; boundary=${boundary}`;
         }
